@@ -2,7 +2,8 @@ const inquirer = require('inquirer');
 const mysql = require('mysql2');
 const cTable = require('console.table');
 const { viewRoles, selectDepartment, viewEmployees } = require('./crud/read');
-const addDepartment = require('./crud/create');
+const { addDepartment, addEmployee } = require('./crud/create');
+
 
 
 const connection = mysql.createConnection({
@@ -90,6 +91,34 @@ const prompts = () => {
                             // addRole(connection, prompts, answers)
                         })
                     });
+                    break;
+
+            case 'Add an employee':
+                inquirer.prompt([
+                    {
+                        type: 'input',
+                        name: 'firstName',
+                        message: "Employee's first name?"
+                    },
+                    {
+                        type: 'input',
+                        name: 'lastName',
+                        message: "Employee's last name?"
+                    },
+                    {
+                        type: 'input',
+                        name: 'managerID',
+                        message: "Employee's manager ID?"
+                    },
+                    {
+                        type: 'input',
+                        name: 'roleID',
+                        message: "Employee's role ID?"
+                    }
+
+                     ]).then(answers => {
+                         addEmployee(connection, prompts, answers);
+                     });
 
             
            
