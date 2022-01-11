@@ -118,7 +118,7 @@ const prompts = () => {
                         type: 'list',
                         name: 'manager',
                         message: "Employee's manager?",
-                        choices: ['Mike Chan', 'Ashley Rodriguez', 'Ashton Brugh']
+                        choices: ['1', '2', '3']
                     }
                      ]).then(answers => {
                          addEmployee(connection, prompts, answers);

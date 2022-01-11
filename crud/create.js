@@ -31,6 +31,7 @@ const addRole = (connection, prompts, roleAnswers) => {
 
 };
 
+//create add employee function
 const addEmployee = (connection, prompts, employee) => {
     connection.query(
 
