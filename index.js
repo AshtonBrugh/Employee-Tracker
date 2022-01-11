@@ -2,7 +2,7 @@ const inquirer = require('inquirer');
 const mysql = require('mysql2');
 const cTable = require('console.table');
 const { viewRoles, selectDepartment, viewEmployees } = require('./crud/read');
-const { addDepartment, addEmployee } = require('./crud/create');
+const { addDepartment, addEmployee, addRole } = require('./crud/create');
 
 
 
@@ -10,7 +10,8 @@ const connection = mysql.createConnection({
     host: 'localhost',
     user: 'AshtonBrugh',
     password: 'password',
-    database: 'employee_tracker'
+    database: 'employee_tracker',
+    multipleStatements: true
 
 });
 
@@ -23,10 +24,11 @@ const prompts = () => {
             type: 'list',
             name: 'action',
             message: 'What would you like to do?',
-            choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role']
+            choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update employee role']
         }
     ]).then(answers => {
-        console.log(answers); //USE SWITCH STATEMENTS HERE 
+
+         //USE SWITCH STATEMENTS HERE 
         switch (answers.action) {
             case 'View all departments':
                 //calling your function to get all departments
@@ -64,34 +66,35 @@ const prompts = () => {
                     'SELECT * FROM department',
                     (error, data) => {
                         if (error) throw error
-                        
-                        console.log(data)
                         //use 'data' and create an array called 'dpts' that have all departments
+                        var depts = Object.values(data);
+                        console.log(depts);
                         inquirer.prompt([
                             {
                                 type: 'input',
-                                name: 'employeeName',
-                                message: 'What is the employee name?'
+                                name: 'deptName',
+                                message: 'What is the role?'
                             },
                             {
                                 type: 'input',
-                                name: 'employeeSalary',
-                                message: 'What is the employee salary?'
+                                name: 'deptSalary',
+                                message: 'What is the salary?'
                                 
                             },
                             {
                                 type: 'list',
-                                name: 'employeeDept',
-                                message: 'What is the employee department?',
-                                choices: /* Somehow you need to transform data into an array of dpts */dpts
+                                name: 'deptChoice',
+                                message: 'What is the department?',
+                                choices: depts
                             }
-        
-                        ]).then(answers => {
-                            
-                            // addRole(connection, prompts, answers)
+                        
+                        ])
+                            .then(answers => {
+                            addRole(connection, prompts, answers)
                         })
                     });
                     break;
+
 
             case 'Add an employee':
                 inquirer.prompt([
@@ -107,19 +110,10 @@ const prompts = () => {
                     },
                     {
                         type: 'input',
-                        name: 'jobTitle',
-                        message: "Employee's job title?"
+                        name: 'role',
+                        message: "Employee's role?"
                     },
-                    {
-                        type: 'input',
-                        name: 'department',
-                        message: "Employee's department?"
-                    },
-                    {
-                        type: 'input',
-                        name: 'salary',
-                        message: "Employee's salary?"
-                    },
+                    
                     {
                         type: 'list',
                         name: 'manager',
@@ -129,11 +123,7 @@ const prompts = () => {
                      ]).then(answers => {
                          addEmployee(connection, prompts, answers);
                      });
-
-            
-           
-
-        
+                     break;
             default:
                 break;
         }
@@ -143,6 +133,8 @@ const prompts = () => {
 
 
 prompts();
+
+
 
 
 

@@ -1,5 +1,4 @@
 //this is where we add a department & an employee
-
 const addDepartment = (connection, prompts, department) => {
     connection.query(
        
@@ -14,15 +13,28 @@ const addDepartment = (connection, prompts, department) => {
 };
 
 //createa addRole function
-const addRole = (connection, prompt, roleAnswers) => {
+const addRole = (connection, prompts, roleAnswers) => {
 
-    //then you can use roleAnswers.xxxxx to build your next INSERT connection to DB
+    connection.query(
+        "SELECT id FROM department WHERE name =  '" + roleAnswers.deptChoice + "'", (err, res) => {
+            if (err) throw err
+            const deptID = res;
+        
+        
+        "INSERT INTO role (title, salary, department_id) VALUES (?,?,?)", [roleAnswers.deptName, roleAnswers.deptSalary, deptID],
+        (error) => {
+            if (error) throw error
+        }
+        prompts();
+        }
+    )
+
 };
 
 const addEmployee = (connection, prompts, employee) => {
     connection.query(
 
-        "INSERT INTO employee (first_name, last_name, job_title, department, salary, manager, role_id) VALUES (?,?,?,?,?,?,?)", [employee.firstName, employee.lastName, employee.jobTitle, employee.department, employee.salary, employee.manager, employee.roleID],
+        "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)", [employee.firstName, employee.lastName, employee.role, employee.manager],
         (error) => {
             if (error) throw error
 

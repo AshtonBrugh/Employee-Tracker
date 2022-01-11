@@ -20,7 +20,6 @@ const viewRoles = (connection, prompts) => {
             if (error) throw error
 
             console.log(data)
-            console.log('this is view roles')
             prompts();
 
         }
