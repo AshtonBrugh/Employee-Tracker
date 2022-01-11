@@ -107,15 +107,25 @@ const prompts = () => {
                     },
                     {
                         type: 'input',
-                        name: 'managerID',
-                        message: "Employee's manager ID?"
+                        name: 'jobTitle',
+                        message: "Employee's job title?"
                     },
                     {
                         type: 'input',
-                        name: 'roleID',
-                        message: "Employee's role ID?"
+                        name: 'department',
+                        message: "Employee's department?"
+                    },
+                    {
+                        type: 'input',
+                        name: 'salary',
+                        message: "Employee's salary?"
+                    },
+                    {
+                        type: 'list',
+                        name: 'manager',
+                        message: "Employee's manager?",
+                        choices: ['Mike Chan', 'Ashley Rodriguez', 'Ashton Brugh']
                     }
-
                      ]).then(answers => {
                          addEmployee(connection, prompts, answers);
                      });

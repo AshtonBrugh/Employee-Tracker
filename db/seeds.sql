@@ -9,8 +9,8 @@ VALUES
     ('Lead Engineer', 1500000, 2 ),
     ('Account Manager', 130000, 3);
 
-INSERT INTO employee(first_name, last_name, role_id, manager_id)
+INSERT INTO employee(first_name, last_name, job_title, department, salary, manager, role_id)
 VALUES  
-    ('Mike', 'Chan', 1, null),
-    ('Ashley', 'Rodriguez', 2, 1),
-    ('Kevin', 'Tupik', 3, 1);
+    ('Mike', 'Chan', 'Salesperson', 'Sales', 80000, 'Ashton Brugh', 1),
+    ('Ashley', 'Rodriguez', 'Lead Engineer', 'Engineering', 150000, null, 2),
+    ('Kevin', 'Tupik', 'Account Manager', 'Finance', 200000, 'Ashton Brugh', 3);

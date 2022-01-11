@@ -22,7 +22,7 @@ const addRole = (connection, prompt, roleAnswers) => {
 const addEmployee = (connection, prompts, employee) => {
     connection.query(
 
-        "INSERT INTO employee (first_name, last_name, manager_id, role_id) VALUES (?,?,?,?)", [employee.firstName, employee.lastName, employee.managerID, employee.roleID],
+        "INSERT INTO employee (first_name, last_name, job_title, department, salary, manager, role_id) VALUES (?,?,?,?,?,?,?)", [employee.firstName, employee.lastName, employee.jobTitle, employee.department, employee.salary, employee.manager, employee.roleID],
         (error) => {
             if (error) throw error
 
